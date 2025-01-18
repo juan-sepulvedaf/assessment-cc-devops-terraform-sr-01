@@ -1,18 +1,43 @@
-name: GitHub Actions Demo
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-on: [push]
+name: CI Workflow
+
+on:
+  pull_request:
+    branches:
+      - devel  # Cambia "main" si utilizas otro nombre de rama principal.
+
 jobs:
-  Explore-GitHub-Actions:
-    runs-on: ubuntu-latest
+  ci-tasks:
+    runs-on: ubuntu-latest  # Runner en el que se ejecutarán las tareas.
+
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - name: Check out repository code
+      # 1. Checkout del código
+      - name: Checkout repository
         uses: actions/checkout@v4
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+
+      # 2. Configurar Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'  # Cambia la versión si necesitas otra.
+
+      # 3. Instalar dependencias
+      - name: Install dependencies
+        run: npm install
+
+      # 4. Ejecutar el linter (ESLint)
+      - name: Run ESLint
+        run: npm run lint
+
+      # 5. Ejecutar el formateador (Prettier)
+      - name: Run Prettier
+        run: npm run prettier
+
+      # 6. Ejecutar pruebas (Jest)
+      - name: Run tests with Jest
+        env:
+          CI: true  # Asegura que Jest se ejecute en modo CI.
+        run: npm run test
+
+      # 7. Construir el proyecto
+      - name: Build project
+        run: npm run build
