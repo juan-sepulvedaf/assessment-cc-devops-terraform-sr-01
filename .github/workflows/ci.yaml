@@ -5,7 +5,6 @@ on:
     types: [opened, synchronize, reopened]
     branches:
       - devel  # Cambia "main" si utilizas otro nombre de rama principal.
-    
 jobs:
   ci-tasks:
     runs-on: ubuntu-latest  # Runner en el que se ejecutarán las tareas.
