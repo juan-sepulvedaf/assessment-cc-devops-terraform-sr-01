@@ -5,6 +5,8 @@ on:
     types: [opened, synchronize, reopened]
     branches:
       - devel  # Cambia "main" si utilizas otro nombre de rama principal.
+  push:
+
 jobs:
   ci-tasks:
     runs-on: ubuntu-latest  # Runner en el que se ejecutarán las tareas.
@@ -18,11 +20,11 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'  # Cambia la versión si necesitas otra.
+          node-version: '15'
 
       # 3. Instalar dependencias
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       # 4. Ejecutar el linter (ESLint)
       - name: Run ESLint
