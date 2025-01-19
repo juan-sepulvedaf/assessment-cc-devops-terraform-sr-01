@@ -32,7 +32,7 @@ jobs:
 
       # 5. Ejecutar el formateador (Prettier)
       - name: Run Prettier
-        run: npm run prettier --write
+        run: npm run prettier
 
       # 6. Ejecutar pruebas (Jest)
       - name: Run tests with Jest
