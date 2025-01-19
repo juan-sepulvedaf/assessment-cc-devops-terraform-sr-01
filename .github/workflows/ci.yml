@@ -6,9 +6,22 @@ on:
 
 jobs:
   ci-tasks:
-    runs-on: ubuntu-latest  # Runner en el que se ejecutarán las tareas.
+    runs-on: ubuntu-latest # Runner en el que se ejecutarán las tareas.
 
     steps:
+      - name: Check PR source branch for stage and prod
+        run: |
+          # Validar si el PR hacia stage proviene de devel
+          if [[ "${{ github.event.pull_request.base.ref }}" == "stage" && "${{ github.event.pull_request.head.ref }}" != "devel" ]]; then
+            echo "PR source branch must be 'devel' to merge into 'stage'."
+            exit 1
+          fi
+
+          # Validar si el PR hacia prod proviene de stage
+          if [[ "${{ github.event.pull_request.base.ref }}" == "prod" && "${{ github.event.pull_request.head.ref }}" != "stage" ]]; then
+            echo "PR source branch must be 'stage' to merge into 'prod'."
+            exit 1
+          fi
       # 1. Checkout del código
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -17,7 +30,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '15'
+          node-version: "15"
 
       # 3. Instalar dependencias
       - name: Install dependencies
@@ -34,10 +47,9 @@ jobs:
       # 6. Ejecutar pruebas (Jest)
       - name: Run tests with Jest
         env:
-          CI: true  # Asegura que Jest se ejecute en modo CI.
+          CI: true # Asegura que Jest se ejecute en modo CI.
         run: npm run test
 
       # 7. Construir el proyecto
       - name: Build project
         run: npm run build
-        
