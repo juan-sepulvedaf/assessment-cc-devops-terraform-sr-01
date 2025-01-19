@@ -3,9 +3,6 @@ name: CI Workflow
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-    branches:
-      - devel  # Cambia "main" si utilizas otro nombre de rama principal.
-  push:
 
 jobs:
   ci-tasks:
@@ -43,3 +40,4 @@ jobs:
       # 7. Construir el proyecto
       - name: Build project
         run: npm run build
+        
