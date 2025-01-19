@@ -3,11 +3,6 @@ name: CI Workflow
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-    branches:
-      - 'dev'
-      - 'stage'
-      - 'prod'  
-  push:
 
 jobs:
   ci-tasks:
