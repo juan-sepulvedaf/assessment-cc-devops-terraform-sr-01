@@ -10,13 +10,14 @@ on:
 jobs:
   deploy-to-s3:
     runs-on: ubuntu-latest
+    
 
     steps:
       # 1. Descargar los artefactos generados por el workflow de CI
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
-          name: build-artifacts
+          name: ${{ github.ref }}-build-artifacts
 
       # 2. Configurar AWS CLI
       - name: Set up AWS CLI
