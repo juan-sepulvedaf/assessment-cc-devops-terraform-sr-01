@@ -17,7 +17,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
-          name: ${{ github.ref }}-build-artifacts
+          name: build-artifacts
 
       # 2. Configurar AWS CLI
       - name: Set up AWS CLI
