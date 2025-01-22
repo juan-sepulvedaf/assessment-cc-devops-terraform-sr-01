@@ -2,7 +2,7 @@ name: CI Workflow
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [opened, synchronize, reopened, edited]
 
 jobs:
   ci-tasks:
@@ -59,3 +59,4 @@ jobs:
         with:
           name: build-artifacts
           path: ./build/
+  
