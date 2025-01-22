@@ -53,3 +53,9 @@ jobs:
       # 7. Construir el proyecto
       - name: Build project
         run: npm run build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: ./build/
