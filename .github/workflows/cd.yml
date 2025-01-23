@@ -13,16 +13,6 @@ jobs:
     
 
     steps:
-      - name: list files
-        run: ls -a
-
-      # 1. Descargar los artefactos generados por el workflow de CI
-      - name: Download build artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: build-artifacts-${{github.sha}}
-
-      # 2. Configurar AWS CLI
       - name: Set up AWS CLI
         uses: aws-actions/configure-aws-credentials@v1
         with:
