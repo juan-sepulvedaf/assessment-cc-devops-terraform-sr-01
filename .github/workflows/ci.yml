@@ -54,9 +54,12 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
+      - uses: actions/checkout@master
+      - uses: shallwefootball/s3-upload-action@master
         with:
-          name: build-artifacts-${{github.sha}}
-          path: ./build/
+          aws_key_id: ${{ secrets.AWS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+          aws_bucket: "s3://fullstack-builds"
+          source_dir: './build'
+          destination_dir: '/${{github.sha}}'
   
