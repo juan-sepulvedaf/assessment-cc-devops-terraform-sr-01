@@ -54,8 +54,8 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - uses: actions/checkout@master
       - uses: shallwefootball/s3-upload-action@master
+        name: Upload build
         with:
           aws_key_id: ${{ secrets.AWS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
