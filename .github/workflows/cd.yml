@@ -27,4 +27,4 @@ jobs:
       # 3. Subir los artefactos al bucket S3
       - name: Deploy to S3
         run: |
-          aws s3 cp s3://fullstack-builds/${{github.sha}} s3://fullstack-labs-devops-$BRANCH_NAME --recursive
+          aws s3 cp s3://fullstack-builds/${{github.sha}}/ s3://fullstack-labs-devops-${{env.BRANCH_NAME}}/ --recursive
