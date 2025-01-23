@@ -1,0 +1,43 @@
+name: Deploy to S3
+
+on:
+  push:
+    branches:
+      - devel
+      - stage
+      - prod
+
+jobs:
+  deploy-to-s3:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "15"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Extract branch name
+        id: extract_branch
+        run: echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+
+      # 3. Subir los artefactos al bucket S3
+      - name: Deploy to S3
+        run: |
+          aws s3 cp ./build s3://fullstack-labs-devops-${{env.BRANCH_NAME}}/ --recursive
