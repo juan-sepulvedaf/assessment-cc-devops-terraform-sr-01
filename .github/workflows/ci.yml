@@ -61,5 +61,5 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
           aws_bucket: 'fullstack-builds'
           source_dir: './build'
-          destination_dir: '${{github.sha}}'
+          destination_dir: '${{github.ref}}'
   
