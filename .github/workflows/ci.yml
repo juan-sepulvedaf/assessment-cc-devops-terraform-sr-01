@@ -48,18 +48,14 @@ jobs:
       - name: Run tests with Jest
         env:
           CI: true
-        run: npm run test
+        run: npm run test     
 
-      # 7. Construir el proyecto
-      - name: Build project
-        run: npm run build
-
-      - uses: shallwefootball/s3-upload-action@master
-        name: Upload build
-        with:
-          aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
-          aws_bucket: 'fullstack-builds'
-          source_dir: './build'
-          destination_dir: '${{github.ref}}'
+      # - uses: shallwefootball/s3-upload-action@master
+      #   name: Upload build
+      #   with:
+      #     aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+      #     aws_bucket: 'fullstack-builds'
+      #     source_dir: './build'
+      #     destination_dir: '${{github.ref}}'
   
