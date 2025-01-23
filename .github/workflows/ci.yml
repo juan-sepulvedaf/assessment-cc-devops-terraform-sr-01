@@ -47,7 +47,7 @@ jobs:
       # 6. Ejecutar pruebas (Jest)
       - name: Run tests with Jest
         env:
-          CI: true # Asegura que Jest se ejecute en modo CI.
+          CI: true
         run: npm run test
 
       # 7. Construir el proyecto
