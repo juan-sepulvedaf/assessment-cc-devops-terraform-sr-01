@@ -2,7 +2,7 @@ name: CI Workflow
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [opened, synchronize, reopened, edited]
 
 jobs:
   ci-tasks:
@@ -47,9 +47,15 @@ jobs:
       # 6. Ejecutar pruebas (Jest)
       - name: Run tests with Jest
         env:
-          CI: true # Asegura que Jest se ejecute en modo CI.
-        run: npm run test
+          CI: true
+        run: npm run test     
 
-      # 7. Construir el proyecto
-      - name: Build project
-        run: npm run build
+      # - uses: shallwefootball/s3-upload-action@master
+      #   name: Upload build
+      #   with:
+      #     aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+      #     aws_bucket: 'fullstack-builds'
+      #     source_dir: './build'
+      #     destination_dir: '${{github.ref}}'
+  
